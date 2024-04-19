@@ -1,10 +1,5 @@
 import read_lines
 
-# def execute(filename);
-# 	inputs = read_lines("input.txt")
-# 	interm_res = "..."
-# 	return result_arr
-
 def solve(str: line):
 	# apply logic to line
 	# return result_arr
@@ -16,6 +11,7 @@ def execute(str: infile):
 	# apply logic to each line
 	result_arr = []
 	for input in inputs:
+		print(f"input: {input}")
 		interm = solve(input)
 		result_arr.append(interm)
 	# join results with ' ' and '\n' at end
@@ -33,7 +29,11 @@ if __name__ == "__main__":
 	]
 
 	for name, i in enumerate(filenames):
-		with open(name, 'r') as infile:
-			results = execute(infile)
-			with open(f"level{level}_{i}.res", 'w') as outfile:
-				outfile.write(results)
+		try:
+			with open(name, 'r') as infile:
+				results = execute(infile)
+				with open(f"level{level}_{i}.res", 'w') as outfile:
+					outfile.write(results)
+		except:
+			print(f"Error in {name}")
+			continue
