@@ -1,22 +1,34 @@
-from reads import read_lines
+from lvl_3.reads import read_lines
 import os
+import math
 
 def solve(line):
-	w = 0
-	d = 0
-	s = 0
-	a = 0
-	chars = list(line)
-	for el in chars:
+	max_height = 0
+	max_width = 0
+	min_height = 0
+	min_width = 0
+	curr_height = 0
+	curr_width = 0
+	for el in line:
 		if el == 'W':
-			w += 1
-		elif el == 'D':
-			d += 1
+			curr_height += 1
 		elif el == 'S':
-			s += 1
+			curr_height -= 1
 		elif el == 'A':
-			a += 1
-	return [str(w), str(d), str(s), str(a)]
+			curr_width -= 1
+		elif el == 'D':
+			curr_width += 1
+		if curr_height > max_height:
+			max_height = curr_height
+		if curr_height < min_height:
+			min_height = curr_height
+		if curr_width > max_width:
+			max_width = curr_width
+		if curr_width < min_width:
+			min_width = curr_width
+	height = abs(max_height -min_height) + 1
+	width = abs(max_width - min_width) + 1
+	return [str(width), str(height)]
 
 def execute(infile):
 	# read input
@@ -27,13 +39,14 @@ def execute(infile):
 	for input in inputs:
 		# print(f"input: {input}")
 		interm = solve(input)
+		# print(f"interm: {' '.join(interm)}")
 		result_arr.append(' '.join(interm))
 	# join results with ' ' and '\n' at end
 	results = '\n'.join(result_arr)
 	return results
 
 if __name__ == "__main__":
-	level = 1
+	level = 2
 	indir = "inputs"
 	filenames = [
 		f"./{indir}/level{level}_1.in",
@@ -47,7 +60,7 @@ if __name__ == "__main__":
 	if not os.path.exists(outdir):
 		os.mkdir(outdir)
 	for i, name in enumerate(filenames):
-		print(f"name: {name}")
+		# print(f"name: {name}")
 		# try:
 		# with open(name, 'r') as infile:
 		results = execute(name)
